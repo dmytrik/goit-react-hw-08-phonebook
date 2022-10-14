@@ -8,4 +8,5 @@ export const PhoneContact = styled.li`
 `;
 export const DeleteContact = styled.button`
   margin-left: 10px;
+  cursor: pointer;
 `;

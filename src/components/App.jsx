@@ -17,7 +17,6 @@ class App extends Component {
 
   componentDidMount() {
     const startContacts = JSON.parse(localStorage.getItem('contacts'));
-    console.log(startContacts);
     if (startContacts) {
       this.setState({ contacts: startContacts });
     }
@@ -54,9 +53,12 @@ class App extends Component {
 
   deleteContact = e => {
     const id = e.currentTarget.dataset.id;
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
-    }));
+    e.currentTarget.style.backgroundColor = 'blue';
+    setTimeout(() => {
+      this.setState(prevState => ({
+        contacts: prevState.contacts.filter(contact => contact.id !== id),
+      }));
+    }, 500);
   };
 
   render() {

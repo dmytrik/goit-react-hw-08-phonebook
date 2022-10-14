@@ -9,24 +9,18 @@ class ContactForm extends Component {
     number: '',
   };
 
-  handleNameChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
-  };
-
-  handleNumberChange = e => {
+  handleContactChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
 
   submitForm = e => {
     e.preventDefault();
-    const nameContact = this.state.name;
-    const numberContact = this.state.number;
+    const { name, number } = this.state;
     const newContact = {
       id: nanoid(),
-      name: nameContact,
-      number: numberContact,
+      name,
+      number,
     };
     this.setState({ name: '', number: '' });
     this.props.addContact(newContact);
@@ -46,7 +40,7 @@ class ContactForm extends Component {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
               value={name}
-              onChange={this.handleNameChange}
+              onChange={this.handleContactChange}
             ></Input>
           </Label>
           <Label>
@@ -58,7 +52,7 @@ class ContactForm extends Component {
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
               value={number}
-              onChange={this.handleNumberChange}
+              onChange={this.handleContactChange}
             ></Input>
           </Label>
           <Submit type="submit">Add contact</Submit>
