@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import ContactsList from './ContactsList/ContactsList';
 import ContactForm from './Form/Form';
 import Filter from './Filter/Filter';
+import Todos from './Todos/Todos';
 import { Title, ContactsListTitle } from './Phonebook.styled';
 
 const useLocalStorage = (key, defaultValue) => {
@@ -63,6 +64,7 @@ const App = () => {
 
   return (
     <>
+      <Todos />
       <Title>Phonebook</Title>
       <ContactForm addContact={addContact} />
       <ContactsListTitle>Contacts</ContactsListTitle>
