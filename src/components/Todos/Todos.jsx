@@ -1,21 +1,43 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTodo, removeTodo, toggleTodoComplete } from 'redux/store/todoSlice';
 
 const Todos = () => {
-  const [todos, setTodos] = useState([]);
+  // const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
+  const todos = useSelector(state => state.todos.todos);
+  const dispatch = useDispatch();
+  // const addTodo = () => {
+  //   if (text.trim().length) {
+  //     setTodos([
+  //       ...todos,
+  //       {
+  //         id: Date.now(),
+  //         text,
+  //         completed: false,
+  //       },
+  //     ]);
+  //     setText('');
+  //   }
+  // };
 
-  const addTodo = () => {
-    if (text.trim().length) {
-      setTodos([
-        ...todos,
-        {
-          id: new Date().toISOString,
-          text,
-          completed: false,
-        },
-      ]);
-    }
-  };
+  // const toggleTodoComete = todoId => {
+  //   // setTodos(
+  //   //   todos.map(todo => {
+  //   //     if (todo.id === todoId) {
+  //   //       return {
+  //   //         ...todo,
+  //   //         completed: !todo.completed,
+  //   //       };
+  //   //     }
+  //   //     return todo;
+  //   //   })
+  //   // );
+  // };
+
+  // const removeTodo = todoId => {
+  //   // setTodos(todos.filter(({ id }) => id !== todoId));
+  // };
 
   return (
     <>
@@ -27,16 +49,33 @@ const Todos = () => {
             setText(e.target.value);
           }}
         />
-        <button type="button" onClick={addTodo}>
+        <button
+          type="button"
+          onClick={() => {
+            dispatch(addTodo({ text }));
+          }}
+        >
           Додати тодо
         </button>
       </label>
       <ul>
         {todos.map(todo => (
           <li key={todo.id}>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => {
+                dispatch(toggleTodoComplete({ id: todo.id }));
+              }}
+            />
             <span>{todo.text}</span>
-            <button>Delete</button>
+            <button
+              onClick={() => {
+                dispatch(removeTodo({ id: todo.id }));
+              }}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
