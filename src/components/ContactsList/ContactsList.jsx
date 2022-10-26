@@ -1,38 +1,38 @@
 import { PhoneList, PhoneContact, DeleteContact } from './ContactsList.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeContact } from 'redux/store/contactsSlice';
+import { deleteContact } from 'redux/store/contactsSlice';
 
 export default function ContactsList() {
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts.items);
   const filter = useSelector(state => state.contacts.filter);
   const visibleContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter.toLowerCase())
   );
 
   const dispatch = useDispatch();
-  const deleteContact = (e, id) => {
+  const delContact = (e, id) => {
     e.target.style.backgroundColor = 'blue';
-    setTimeout(() => {
-      dispatch(removeContact({ id }));
-    }, 500);
+    dispatch(deleteContact(id));
   };
 
   return (
     <>
       <PhoneList>
-        {visibleContacts.map(({ id, name, number }) => (
-          <PhoneContact key={id}>
-            {name} : {number}
-            <DeleteContact
-              type="button"
-              onClick={e => {
-                deleteContact(e, id);
-              }}
-            >
-              Delete
-            </DeleteContact>
-          </PhoneContact>
-        ))}
+        {visibleContacts.map(({ id, name, phone }) => {
+          return (
+            <PhoneContact key={id}>
+              {name} : {phone}
+              <DeleteContact
+                type="button"
+                onClick={e => {
+                  delContact(e, id);
+                }}
+              >
+                Delete
+              </DeleteContact>
+            </PhoneContact>
+          );
+        })}
       </PhoneList>
     </>
   );

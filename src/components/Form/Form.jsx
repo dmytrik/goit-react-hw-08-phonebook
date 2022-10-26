@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/store/contactsSlice';
+import { addNewContact, fetchContacts } from 'redux/store/contactsSlice';
 import { nanoid } from 'nanoid';
 import { Form, Label, Property, Input, Submit } from './Form.styled';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts.items);
 
   const handleContactChange = e => {
     const { name, value } = e.currentTarget;
@@ -16,32 +16,34 @@ const ContactForm = () => {
       case 'name':
         setName(value);
         break;
-      case 'number':
-        setNumber(value);
+      case 'phone':
+        setPhone(value);
         break;
       default:
         return;
     }
   };
 
-  const submitForm = e => {
+  const submitForm = async e => {
     e.preventDefault();
     const contact = {
       id: nanoid(),
       name,
-      number,
+      phone,
+      createdAt: new Date().toDateString(),
     };
     for (const cont of contacts) {
       if (cont.name.toLowerCase() === contact.name.toLowerCase()) {
         alert(`${name} is already in contacts`);
         setName('');
-        setNumber('');
+        setPhone('');
         return;
       }
     }
     setName('');
-    setNumber('');
-    dispatch(addContact({ contact }));
+    setPhone('');
+    await dispatch(addNewContact(contact));
+    dispatch(fetchContacts());
   };
 
   return (
@@ -63,11 +65,11 @@ const ContactForm = () => {
           <Property>Number</Property>
           <Input
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={number}
+            value={phone}
             onChange={handleContactChange}
           ></Input>
         </Label>

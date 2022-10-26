@@ -1,30 +1,81 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+import { getContacts, delContact, addContact } from 'api';
+
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchContacts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const contacts = await getContacts();
+      return contacts;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  'contacts/removeContact',
+  async (id, { rejectWithValue, dispatch }) => {
+    try {
+      await delContact(id);
+      dispatch(removeContact({ id }));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addNewContact = createAsyncThunk(
+  'contacts/addNewContact',
+  async (contact, { rejectWithValue, dispatch }) => {
+    try {
+      await addContact(contact);
+      dispatch(addContactInState({ contact }));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+const setError = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    items: [],
+    isLoading: false,
+    error: null,
     filter: '',
   },
   reducers: {
-    addContact(state, action) {
-      state.contacts.push(action.payload.contact);
+    addContactInState(state, action) {
+      state.items.push(action.payload.contact);
     },
     removeContact(state, action) {
-      state.contacts = state.contacts.filter(
-        ({ id }) => id !== action.payload.id
-      );
+      state.items = state.items.filter(({ id }) => id !== action.payload.id);
     },
     setFilter(state, action) {
       state.filter = action.payload.text;
     },
   },
+  extraReducers: {
+    [fetchContacts.pending]: state => {
+      state.isLoading = true;
+    },
+    [fetchContacts.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.items = action.payload;
+    },
+    [fetchContacts.rejected]: setError,
+    [deleteContact.rejected]: setError,
+    [addNewContact.rejected]: setError,
+  },
 });
 
-export const { addContact, removeContact, setFilter } = contactsSlice.actions;
+export const { setFilter, addContactInState, removeContact } =
+  contactsSlice.actions;
 export default contactsSlice.reducer;
