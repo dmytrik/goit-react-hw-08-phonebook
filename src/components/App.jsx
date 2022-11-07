@@ -1,29 +1,16 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from 'redux/store/contactsSlice';
-import ContactsList from './ContactsList/ContactsList';
-import ContactForm from './Form/Form';
-import Filter from './Filter/Filter';
-import { Title, ContactsListTitle } from './Phonebook.styled';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './Layout/Layout';
+import Contacts from './Contacts/Contacts';
+import RegisterForm from './RegisterForm/RegisterForm';
 
 const App = () => {
-  const dispatch = useDispatch();
-  const error = useSelector(state => state.contacts.error);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  });
-  if (error !== null) {
-    return <h1>Упс, щось пішло не так, спробуйте перезавантажити сторінку</h1>;
-  }
   return (
-    <>
-      <Title>Phonebook</Title>
-      <ContactForm />
-      <ContactsListTitle>Contacts</ContactsListTitle>
-      <Filter />
-      <ContactsList />
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="contacts" element={<Contacts />} />
+        <Route path="register" element={<RegisterForm />} />
+      </Route>
+    </Routes>
   );
 };
 
