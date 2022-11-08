@@ -1,13 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import {
   Header,
-  AuthList,
-  AuthItem,
   NavList,
   NavListItem,
   Navigation,
   StyledLink,
 } from './Layout.styled';
+import AuthMenu from 'components/AuthMenu/AuthMenu';
 
 const Layout = () => {
   return (
@@ -23,14 +22,7 @@ const Layout = () => {
             </NavListItem>
           </NavList>
         </Navigation>
-        <AuthList>
-          <AuthItem>
-            <StyledLink to="/register">Sign up</StyledLink>
-          </AuthItem>
-          <AuthItem>
-            <StyledLink to="/login">Log in</StyledLink>
-          </AuthItem>
-        </AuthList>
+        <AuthMenu />
       </Header>
       <Outlet />
     </>
