@@ -6,9 +6,12 @@ import {
   Navigation,
   StyledLink,
 } from './Layout.styled';
+import { useSelector } from 'react-redux';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
+import UserMenu from 'components/UserMenu/UserMenu';
 
 const Layout = () => {
+  const loggIn = useSelector(state => state.user.isLoggedIn);
   return (
     <>
       <Header>
@@ -22,7 +25,7 @@ const Layout = () => {
             </NavListItem>
           </NavList>
         </Navigation>
-        <AuthMenu />
+        {loggIn ? <UserMenu /> : <AuthMenu />}
       </Header>
       <Outlet />
     </>
