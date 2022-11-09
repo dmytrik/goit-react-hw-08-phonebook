@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import operations from './contacts-operations';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -17,6 +18,11 @@ const contactsSlice = createSlice({
     },
     setFilter(state, action) {
       state.filter = action.payload.text;
+    },
+  },
+  extraReducers: {
+    [operations.getContacts.fulfilled](state, action) {
+      state.items = action.payload;
     },
   },
 });

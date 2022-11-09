@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-
+import { useState } from 'react';
+import operations from 'redux/store/contacts-operations';
+import { useDispatch } from 'react-redux';
 import { Form, Label, Property, Input, Submit } from './Form.styled';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
 
   const handleContactChange = e => {
     const { name, value } = e.currentTarget;
@@ -12,8 +14,8 @@ const ContactForm = () => {
       case 'name':
         setName(value);
         break;
-      case 'phone':
-        setPhone(value);
+      case 'number':
+        setNumber(value);
         break;
       default:
         return;
@@ -22,9 +24,13 @@ const ContactForm = () => {
 
   const submitForm = async e => {
     e.preventDefault();
-
+    const contact = {
+      name,
+      number,
+    };
+    dispatch(operations.addContact(contact));
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -46,11 +52,11 @@ const ContactForm = () => {
           <Property>Number</Property>
           <Input
             type="tel"
-            name="phone"
+            name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={phone}
+            value={number}
             onChange={handleContactChange}
           ></Input>
         </Label>

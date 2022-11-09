@@ -30,6 +30,10 @@ const auth = createSlice({
       state.token = null;
       state.isLoggedIn = false;
     },
+    [authOperations.getCurrentUser.fulfilled](state, action) {
+      state.user = action.payload;
+      state.isLoggedIn = true;
+    },
   },
 });
 

@@ -20,9 +20,11 @@ const Layout = () => {
             <NavListItem>
               <StyledLink to="/">Home</StyledLink>
             </NavListItem>
-            <NavListItem>
-              <StyledLink to="/contacts">Contacts</StyledLink>
-            </NavListItem>
+            {loggIn && (
+              <NavListItem>
+                <StyledLink to="/contacts">Contacts</StyledLink>
+              </NavListItem>
+            )}
           </NavList>
         </Navigation>
         {loggIn ? <UserMenu /> : <AuthMenu />}
