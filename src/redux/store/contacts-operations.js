@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { addContactInState } from './contactsSlice';
+import { addContactInState, removeContact } from './contactsSlice';
 
 const getContacts = createAsyncThunk('contacts/getContacts', async () => {
   try {
     const { data } = await axios.get('/contacts');
-    console.log(data);
     return data;
   } catch (error) {}
 });
@@ -21,9 +20,21 @@ const addContact = createAsyncThunk(
   }
 );
 
+const deleteContact = createAsyncThunk(
+  'contacts/delete',
+  async (id, { dispatch }) => {
+    try {
+      const data = await axios.delete(`/contacts/${id}`);
+      dispatch(removeContact({ id }));
+      return data;
+    } catch (error) {}
+  }
+);
+
 const operations = {
   getContacts,
   addContact,
+  deleteContact,
 };
 
 export default operations;

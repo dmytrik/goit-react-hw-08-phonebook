@@ -28,7 +28,8 @@ const ContactForm = () => {
       name,
       number,
     };
-    dispatch(operations.addContact(contact));
+    await dispatch(operations.addContact(contact));
+    dispatch(operations.getContacts());
     setName('');
     setNumber('');
   };
