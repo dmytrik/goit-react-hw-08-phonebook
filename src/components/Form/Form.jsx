@@ -29,7 +29,7 @@ const ContactForm = () => {
       number,
     };
     await dispatch(operations.addContact(contact));
-    dispatch(operations.getContacts());
+    await dispatch(operations.getContacts());
     setName('');
     setNumber('');
   };

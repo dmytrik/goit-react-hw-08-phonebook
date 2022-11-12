@@ -17,4 +17,7 @@ export const ModalContent = styled.div`
   background-color: #fff;
   width: 700px;
   height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
