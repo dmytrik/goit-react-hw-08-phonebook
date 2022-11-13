@@ -6,7 +6,9 @@ const getContacts = createAsyncThunk('contacts/getContacts', async () => {
   try {
     const { data } = await axios.get('/contacts');
     return data;
-  } catch (error) {}
+  } catch (error) {
+    alert(error.message);
+  }
 });
 
 const addContact = createAsyncThunk(
@@ -16,7 +18,9 @@ const addContact = createAsyncThunk(
       const { data } = await axios.post('/contacts', contact);
       dispatch(addContactInState({ contact }));
       return data;
-    } catch (error) {}
+    } catch (error) {
+      alert(error.message);
+    }
   }
 );
 
@@ -26,7 +30,9 @@ const deleteContact = createAsyncThunk(
     try {
       await axios.delete(`/contacts/${id}`);
       dispatch(removeContact({ id }));
-    } catch (error) {}
+    } catch (error) {
+      alert(error.message);
+    }
   }
 );
 
@@ -37,7 +43,9 @@ const changeContact = createAsyncThunk(
     try {
       const response = await axios.patch(`/contacts/${id}`, { name, number });
       dispatch(editContact({ contact: response.data }));
-    } catch (error) {}
+    } catch (error) {
+      alert(error.message);
+    }
   }
 );
 

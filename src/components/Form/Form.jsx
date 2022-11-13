@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import operations from 'redux/store/contacts-operations';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Label, Property, Input, Submit } from './Form.styled';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.items);
 
   const handleContactChange = e => {
     const { name, value } = e.currentTarget;
@@ -28,6 +29,14 @@ const ContactForm = () => {
       name,
       number,
     };
+    for (const el of contacts) {
+      if (el.name.toLowerCase() === contact.name.toLocaleLowerCase()) {
+        alert(`без шансів додати, вже маємо контакт з таким ім'ям`);
+        setName('');
+        setNumber('');
+        return;
+      }
+    }
     await dispatch(operations.addContact(contact));
     await dispatch(operations.getContacts());
     setName('');

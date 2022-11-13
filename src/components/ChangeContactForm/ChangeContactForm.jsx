@@ -6,13 +6,15 @@ import {
   Submit,
 } from './ChangeContactForm.styled';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import operations from 'redux/store/contacts-operations';
+import PropTypes from 'prop-types';
 
 const ChangeContactForm = ({ currentContact, closeModal }) => {
   const { id, name, number } = currentContact;
   const [newName, setNewName] = useState(name);
   const [newNumber, setNewNumber] = useState(number);
+  const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
 
   const handleContactChange = e => {
@@ -36,6 +38,14 @@ const ChangeContactForm = ({ currentContact, closeModal }) => {
       name: newName,
       number: newNumber,
     };
+    for (const el of contacts) {
+      if (el.name.toLowerCase() === changedContact.name.toLocaleLowerCase()) {
+        alert(`без шансів змінити, вже маємо контакт з таким ім'ям`);
+        setNewName('');
+        setNewNumber('');
+        return;
+      }
+    }
     await dispatch(operations.changeContact(changedContact));
     closeModal(state => !state);
   };
@@ -71,3 +81,7 @@ const ChangeContactForm = ({ currentContact, closeModal }) => {
   );
 };
 export default ChangeContactForm;
+ChangeContactForm.propTypes = {
+  currentContact: PropTypes.object,
+  closeModal: PropTypes.func,
+};

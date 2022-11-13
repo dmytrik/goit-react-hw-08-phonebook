@@ -1,13 +1,35 @@
 import { Form, Label, Input, Submit, Span } from './RegisterForm.styled';
 import { useState } from 'react';
 import authOperations from '../../redux/store/auth-operations';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetError } from 'redux/store/auth';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const userError = useSelector(state => state.user.error);
   const dispatch = useDispatch();
+  const isDisabled =
+    email.trim() === '' || name.trim() === '' || password.trim() === '';
+  if (userError) {
+    const { message = '', code } = userError;
+    switch (code) {
+      case 400:
+        alert('Error creating user, please try again)');
+        dispatch(resetError());
+        break;
+
+      case 500:
+        alert('server error, try reloading the page or try again later');
+        dispatch(resetError());
+        break;
+
+      default:
+        alert(message);
+        dispatch(resetError());
+    }
+  }
 
   const handleUserChange = e => {
     const { name, value } = e.currentTarget;
@@ -65,9 +87,12 @@ const RegisterForm = () => {
           name="password"
           value={password}
           onChange={handleUserChange}
+          minLength="7"
         ></Input>
       </Label>
-      <Submit type="submit">Sign up</Submit>
+      <Submit type="submit" disabled={isDisabled}>
+        Sign up
+      </Submit>
     </Form>
   );
 };

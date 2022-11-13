@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 import {
   Header,
   NavList,
@@ -29,7 +30,9 @@ const Layout = () => {
         </Navigation>
         {loggIn ? <UserMenu /> : <AuthMenu />}
       </Header>
-      <Outlet />
+      <Suspense fallback={null}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

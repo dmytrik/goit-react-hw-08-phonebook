@@ -1,4 +1,5 @@
 import { Item, ContactsBtn } from './ContactItem.styled';
+import PropTypes from 'prop-types';
 
 const ContactItem = ({
   name,
@@ -31,3 +32,10 @@ const ContactItem = ({
 };
 
 export default ContactItem;
+ContactItem.propTypes = {
+  name: PropTypes.string,
+  number: PropTypes.string,
+  handleDeleteContact: PropTypes.func,
+  contactChange: PropTypes.func,
+  id: PropTypes.string,
+};

@@ -1,28 +1,41 @@
-import { Route, Switch } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import PrivateRoute from './PrivateRoute/PrivateRoute';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { useEffect, lazy } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Layout from './Layout/Layout';
-import Contacts from './Contacts/Contacts';
-import RegisterForm from './RegisterForm/RegisterForm';
-import LoginForm from './LoginForm/LoginForm';
 import authOperations from '../redux/store/auth-operations';
 
+const Contacts = lazy(() => import('./Contacts/Contacts'));
+const RegisterForm = lazy(() => import('./RegisterForm/RegisterForm'));
+const LoginForm = lazy(() => import('./LoginForm/LoginForm'));
+
 const App = () => {
+  const isLoggIn = useSelector(state => state.user.isLoggedIn);
+  const refreshUser = useSelector(state => state.user.isRefreshing);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(authOperations.getCurrentUser());
   }, [dispatch]);
+
   return (
-    <Switch>
-      <Route path="/" element={<Layout />}>
-        <PrivateRoute path="/contacts">
-          <Contacts />
-        </PrivateRoute>
-        <Route path="register" element={<RegisterForm />} />
-        <Route path="login" element={<LoginForm />} />
-      </Route>
-    </Switch>
+    !refreshUser && (
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route
+            path="/contacts"
+            element={isLoggIn ? <Contacts /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="register"
+            element={isLoggIn ? <Navigate to="/contacts" /> : <RegisterForm />}
+          />
+          <Route
+            path="login"
+            element={isLoggIn ? <Navigate to="/contacts" /> : <LoginForm />}
+          />
+        </Route>
+      </Routes>
+    )
   );
 };
 

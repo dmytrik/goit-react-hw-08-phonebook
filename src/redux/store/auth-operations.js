@@ -13,28 +13,58 @@ const token = {
   },
 };
 
-const registerUser = createAsyncThunk('auth/register', async user => {
-  try {
-    const { data } = await axios.post('/users/signup', user);
-    token.set(data.token);
-    return data;
-  } catch (error) {}
-});
-const loginUser = createAsyncThunk('auth/login', async user => {
-  try {
-    const { data } = await axios.post('/users/login', user);
-    token.set(data.token);
-    return data;
-  } catch (error) {}
-});
+const registerUser = createAsyncThunk(
+  'auth/register',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/users/signup', user);
+      token.set(data.token);
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        error: {
+          message: error.message,
+          code: error.response.status,
+        },
+      });
+    }
+  }
+);
+const loginUser = createAsyncThunk(
+  'auth/login',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/users/login', user);
+      token.set(data.token);
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        error: {
+          message: error.message,
+          code: error.response.status,
+        },
+      });
+    }
+  }
+);
 
-const logOut = createAsyncThunk('auth/logOut', async user => {
-  try {
-    const { data } = await axios.post('/users/logout', user);
-    token.unset();
-    return data;
-  } catch (error) {}
-});
+const logOut = createAsyncThunk(
+  'auth/logOut',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/users/logout', user);
+      token.unset();
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        error: {
+          message: error.message,
+          code: error.response.status,
+        },
+      });
+    }
+  }
+);
 
 const getCurrentUser = createAsyncThunk(
   'auth/getCurrentUser',
@@ -42,13 +72,20 @@ const getCurrentUser = createAsyncThunk(
     const state = getState();
     const userToken = state.user.token;
     if (!userToken) {
-      return rejectWithValue();
+      return rejectWithValue({ error: null });
     }
     token.set(userToken);
     try {
       const { data } = await axios.get('/users/current');
       return data;
-    } catch (error) {}
+    } catch (error) {
+      return rejectWithValue({
+        error: {
+          message: error.message,
+          code: error.response.status,
+        },
+      });
+    }
   }
 );
 

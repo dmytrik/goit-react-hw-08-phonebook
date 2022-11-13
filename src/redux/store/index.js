@@ -10,7 +10,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import todoReducer from './todoSlice';
 import contactsReducer from './contactsSlice';
 import authReducer from './auth';
 
@@ -21,7 +20,6 @@ const authConfig = {
 };
 
 const rootReducer = combineReducers({
-  todos: todoReducer,
   contacts: contactsReducer,
   user: persistReducer(authConfig, authReducer),
 });
