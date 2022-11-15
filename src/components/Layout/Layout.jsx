@@ -2,14 +2,6 @@ import { Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Text } from '@chakra-ui/react';
 import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-} from '@chakra-ui/react';
-
-import {
   Header,
   NavList,
   NavListItem,
@@ -43,11 +35,6 @@ const Layout = () => {
         </Navigation>
         {loggIn ? <UserMenu /> : <AuthMenu />}
       </Header>
-      <FormControl>
-        <FormLabel>Email address</FormLabel>
-        <Input type="email" />
-        <FormHelperText>We'll never share your email.</FormHelperText>
-      </FormControl>
       <Suspense fallback={null}>
         <Outlet />
       </Suspense>

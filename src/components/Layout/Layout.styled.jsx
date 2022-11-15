@@ -5,7 +5,7 @@ export const Header = styled.header`
   display: flex;
   border-bottom: 2px solid silver;
   padding: 10px 15px;
-  background-color: rgb(120, 120, 120);
+  background-color: rgb(70, 70, 70);
 `;
 export const Navigation = styled.nav``;
 export const NavList = styled.ul`
