@@ -61,39 +61,41 @@ const RegisterForm = () => {
     setPassword('');
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Label>
-        <Span>Name</Span>
-        <Input
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleUserChange}
-        ></Input>
-      </Label>
-      <Label>
-        <Span>Email</Span>
-        <Input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleUserChange}
-        ></Input>
-      </Label>
-      <Label>
-        <Span>Password</Span>
-        <Input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleUserChange}
-          minLength="7"
-        ></Input>
-      </Label>
-      <Submit type="submit" disabled={isDisabled}>
-        Sign up
-      </Submit>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Label>
+          <Span>Name</Span>
+          <Input
+            type="text"
+            name="name"
+            value={name}
+            onChange={handleUserChange}
+          ></Input>
+        </Label>
+        <Label>
+          <Span>Email</Span>
+          <Input
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleUserChange}
+          ></Input>
+        </Label>
+        <Label>
+          <Span>Password</Span>
+          <Input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleUserChange}
+            minLength="7"
+          ></Input>
+        </Label>
+        <Submit type="submit" disabled={isDisabled}>
+          Sign up
+        </Submit>
+      </Form>
+    </>
   );
 };
 

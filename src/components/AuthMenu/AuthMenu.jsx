@@ -4,10 +4,14 @@ const AuthMenu = () => {
   return (
     <AuthList>
       <AuthItem>
-        <StyledLink to="/register">Sign up</StyledLink>
+        <StyledLink to="/register">
+          <em>Sign up</em>
+        </StyledLink>
       </AuthItem>
       <AuthItem>
-        <StyledLink to="/login">Log in</StyledLink>
+        <StyledLink to="/login">
+          <em>Log in</em>
+        </StyledLink>
       </AuthItem>
     </AuthList>
   );
