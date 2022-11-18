@@ -1,5 +1,15 @@
-import { Form, Label, Input, Submit, Span } from './LoginForm.styled';
+import { Form } from './LoginForm.styled';
 import { useState } from 'react';
+import {
+  Box,
+  Container,
+  Input,
+  InputRightElement,
+  Button,
+  InputGroup,
+  FormControl,
+  FormLabel,
+} from '@chakra-ui/react';
 import authOperations from '../../redux/store/auth-operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetError } from 'redux/store/auth';
@@ -8,6 +18,8 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const userError = useSelector(state => state.user.error);
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
   const dispatch = useDispatch();
   const isDisabled = email.trim() === '' || password.trim() === '';
   if (userError) {
@@ -49,30 +61,71 @@ const LoginForm = () => {
     setPassword('');
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Label>
-        <Span>Email</Span>
-        <Input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleUserChange}
-        ></Input>
-      </Label>
-      <Label>
-        <Span>Password</Span>
-        <Input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleUserChange}
-          minLength="7"
-        ></Input>
-      </Label>
-      <Submit type="submit" disabled={isDisabled}>
-        Log in
-      </Submit>
-    </Form>
+    <Box as="main">
+      <Container maxW="container.lg">
+        <Form onSubmit={handleSubmit}>
+          <FormControl color="white" mt="10px">
+            <FormLabel>Email</FormLabel>
+            <Input
+              placeholder="enter your email"
+              _placeholder={{
+                opacity: 0.7,
+                color: 'white',
+                fontStyle: 'italic',
+              }}
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleUserChange}
+            ></Input>
+          </FormControl>
+          <FormControl color="white" mt="10px">
+            <FormLabel>Password</FormLabel>
+            <InputGroup size="md">
+              <Input
+                pr="4.5rem"
+                type={show ? 'text' : 'password'}
+                placeholder="enter your password"
+                _placeholder={{
+                  opacity: 0.7,
+                  color: 'white',
+                  fontStyle: 'italic',
+                }}
+                color="white"
+                name="password"
+                value={password}
+                onChange={handleUserChange}
+                minLength="7"
+              />
+              <InputRightElement width="4.5rem">
+                <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={handleClick}
+                  color="gray.500"
+                  fontStyle="italic"
+                >
+                  {show ? 'Hide' : 'Show'}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+          {/* <Submit type="submit" disabled={isDisabled}>
+            Log in
+          </Submit> */}
+          <Box
+            display="flex"
+            alignItems="center"
+            mt="10px"
+            justifyContent="center"
+          >
+            <Button colorScheme="whatsapp" type="submit" disabled={isDisabled}>
+              Sign up
+            </Button>
+          </Box>
+        </Form>
+      </Container>
+    </Box>
   );
 };
 
