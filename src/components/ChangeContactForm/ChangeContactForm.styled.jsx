@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
 export const Form = styled.form`
-  border: 1px solid black;
+  border: 2px solid silver;
+  border-radius: 8px;
   margin-top: 10px;
   padding: 15px;
   width: 400px;

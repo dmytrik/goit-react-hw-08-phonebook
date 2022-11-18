@@ -3,6 +3,7 @@ import { useEffect, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from './Layout/Layout';
 import authOperations from '../redux/store/auth-operations';
+import Home from './Home/Home';
 
 const Contacts = lazy(() => import('./Contacts/Contacts'));
 const RegisterForm = lazy(() => import('./RegisterForm/RegisterForm'));
@@ -21,6 +22,7 @@ const App = () => {
     !refreshUser && (
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
           <Route
             path="/contacts"
             element={isLoggIn ? <Contacts /> : <Navigate to="/login" />}

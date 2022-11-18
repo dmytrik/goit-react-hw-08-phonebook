@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import operations from 'redux/store/contacts-operations';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Label, Property, Input, Submit } from './Form.styled';
+import {
+  Box,
+  Input,
+  FormControl,
+  FormLabel,
+  InputGroup,
+  InputLeftElement,
+  IconButton,
+  Button,
+} from '@chakra-ui/react';
+import { PhoneIcon } from '@chakra-ui/icons';
+import { Form } from './Form.styled';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
@@ -46,8 +57,8 @@ const ContactForm = () => {
   return (
     <>
       <Form onSubmit={submitForm}>
-        <Label>
-          <Property>Name</Property>
+        <FormControl color="white">
+          <FormLabel color="white">Name</FormLabel>
           <Input
             type="text"
             name="name"
@@ -56,21 +67,41 @@ const ContactForm = () => {
             required
             value={name}
             onChange={handleContactChange}
-          ></Input>
-        </Label>
-        <Label>
-          <Property>Number</Property>
-          <Input
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            value={number}
-            onChange={handleContactChange}
-          ></Input>
-        </Label>
-        <Submit type="submit">Add contact</Submit>
+          />
+        </FormControl>
+
+        <FormControl mt="10px" color="white">
+          <FormLabel color="white">Number</FormLabel>
+          <InputGroup>
+            <InputLeftElement
+              pointerEvents="none"
+              size="20px"
+              children={
+                <IconButton
+                  variant="outline"
+                  aria-label="Call Sage"
+                  fontSize="20px"
+                  zIndex="-1"
+                  icon={<PhoneIcon color="white" />}
+                />
+              }
+            />
+            <Input
+              type="tel"
+              name="number"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              required
+              value={number}
+              onChange={handleContactChange}
+            />
+          </InputGroup>
+        </FormControl>
+        <Box display="flex" justifyContent="center" mt="10px">
+          <Button colorScheme="whatsapp" type="submit">
+            Add Contact
+          </Button>
+        </Box>
       </Form>
     </>
   );

@@ -1,17 +1,30 @@
 import { useSelector } from 'react-redux';
 import ContactsList from 'components/ContactsList/ContactsList';
+import { Box, Container, Heading } from '@chakra-ui/react';
 import ContactForm from '../Form/Form';
-import { Title } from '../Phonebook.styled';
 import Filter from 'components/Filter/Filter';
 
 const Contacts = () => {
   const contacts = useSelector(state => state.contacts.items);
   return (
     <>
-      <Title>Phonebook</Title>
-      <ContactForm />
-      {contacts.length > 0 && <Filter />}
-      <ContactsList />
+      <Box as="main">
+        <Container
+          maxW="container.lg"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          pt="50px"
+        >
+          <Heading fontSize="5xl" color="white">
+            Phonebook
+          </Heading>
+          <ContactForm />
+          {contacts.length > 0 && <Filter />}
+          <ContactsList />
+        </Container>
+      </Box>
     </>
   );
 };
