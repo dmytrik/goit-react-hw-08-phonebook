@@ -7,6 +7,7 @@ import {
   NavListItem,
   Navigation,
   StyledLink,
+  Container,
 } from './Layout.styled';
 import { useSelector } from 'react-redux';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
@@ -17,23 +18,25 @@ const Layout = () => {
   return (
     <>
       <Header>
-        <Navigation>
-          <NavList>
-            <NavListItem>
-              <StyledLink to="/">
-                <Text as="em">Home</Text>
-              </StyledLink>
-            </NavListItem>
-            {loggIn && (
+        <Container>
+          <Navigation>
+            <NavList>
               <NavListItem>
-                <StyledLink to="/contacts">
-                  <Text as="em">Contacts</Text>
+                <StyledLink to="/">
+                  <Text as="em">Home</Text>
                 </StyledLink>
               </NavListItem>
-            )}
-          </NavList>
-        </Navigation>
-        {loggIn ? <UserMenu /> : <AuthMenu />}
+              {loggIn && (
+                <NavListItem>
+                  <StyledLink to="/contacts">
+                    <Text as="em">Contacts</Text>
+                  </StyledLink>
+                </NavListItem>
+              )}
+            </NavList>
+          </Navigation>
+          {loggIn ? <UserMenu /> : <AuthMenu />}
+        </Container>
       </Header>
       <Suspense fallback={null}>
         <Outlet />

@@ -1,5 +1,5 @@
-import { Item } from './ContactItem.styled';
-import { Box, Text, Button } from '@chakra-ui/react';
+import { Item, ItemBox, ContactsBtn } from './ContactItem.styled';
+import { Text, Button } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 const ContactItem = ({
@@ -11,7 +11,7 @@ const ContactItem = ({
 }) => {
   return (
     <Item>
-      <Box display="flex" justifyContent="space-around" alignItems="center">
+      <ItemBox>
         <Text as="em" color="green.200" fontSize="lg">
           {name} :
         </Text>
@@ -28,7 +28,7 @@ const ContactItem = ({
         >
           Delete
         </Button>
-        <Button
+        <ContactsBtn
           colorScheme="orange"
           ml="5px"
           type="button"
@@ -37,8 +37,8 @@ const ContactItem = ({
           }}
         >
           Change
-        </Button>
-      </Box>
+        </ContactsBtn>
+      </ItemBox>
     </Item>
   );
 };

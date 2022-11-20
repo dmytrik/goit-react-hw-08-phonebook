@@ -5,6 +5,9 @@ export const Form = styled.form`
   width: 500px;
   margin: 0 auto;
   padding-top: 50px;
+  @media screen and (max-width: 420px) {
+    width: 300px;
+  }
 `;
 export const Label = styled.label`
   display: flex;

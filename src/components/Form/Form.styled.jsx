@@ -6,6 +6,9 @@ export const Form = styled.form`
   margin-top: 10px;
   padding: 15px;
   width: 400px;
+  @media screen and (max-width: 420px) {
+    width: 300px;
+  }
 `;
 
 export const Label = styled.label`

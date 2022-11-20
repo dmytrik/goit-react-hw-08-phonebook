@@ -3,11 +3,29 @@ import { NavLink } from 'react-router-dom';
 
 export const Header = styled.header`
   display: flex;
+  width: 100%;
   border-bottom: 2px solid silver;
   padding: 10px 15px;
   background-color: rgb(70, 70, 70);
 `;
-export const Navigation = styled.nav``;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  @media screen and (max-width: 420px) {
+    flex-direction: column;
+    width: auto;
+    margin: 0 auto;
+  }
+`;
+export const Navigation = styled.nav`
+  @media screen and (max-width: 420px) {
+    display: flex;
+    justify-content: center;
+  }
+`;
 export const NavList = styled.ul`
   display: flex;
 `;
