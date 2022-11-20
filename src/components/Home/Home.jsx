@@ -9,7 +9,7 @@ const Home = () => {
       <Box as="main">
         <Container maxW="container.lg" pt="100px">
           <Heading color="white" as="em">
-            Hi to all! My name is Dmitry. This is my final version of the
+            Hi everyone! My name is Dmitry. This is my final version of the
             Phonebook app. To use, go to the following link:
           </Heading>
           {isLoggIn ? (
